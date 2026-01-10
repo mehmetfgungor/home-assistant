@@ -1,0 +1,149 @@
+blueprint:
+  name: IKEA BILRESA dual button remote control
+  author: Mehmet F Gungor
+  description: >
+    This blueprint is designed for the IKEA BILRESA dual button remote control,
+    a Matter-certified device communicating over Thread (Matter over Thread).
+
+    The remote features two physical buttons (Button 1 and Button 2), each
+    supporting single press, double press, and long press interactions.
+    Long press actions can be handled both on press and on release, allowing
+    advanced control scenarios such as dimming or continuous actions.
+
+    The device operates using the Matter standard and requires a Thread Border
+    Router to communicate with Matter-compatible systems such as Home Assistant.
+    When paired via Matter, the remote exposes standardized button events that
+    can be used reliably across different ecosystems.
+
+    The remote can control individual devices, groups of devices, or scenes.
+    A maximum of 10 IKEA smart products can be paired directly with the remote
+    without a hub, or it can be integrated into a Matter-based smart home system
+    using QR code pairing.
+
+    Technical specifications:
+    - Communication protocol: Matter over Thread
+    - Operating frequency: 2402–2480 MHz
+    - Wireless range: up to 10 meters (open air)
+    - Power supply: 2 × AAA (HR03) batteries
+    - Typical battery life: up to 24 months
+    - Operating temperature: 0°C to 40°C
+
+    This blueprint intentionally avoids vendor-specific integrations and relies
+    exclusively on Matter event entities to ensure maximum compatibility and
+    future-proof operation within Home Assistant.
+
+    Product manual: https://www.ikea.com/gb/en/manuals/bilresa-remote-control-white-smart-dual-button__AA-2664471-2-100.pdf
+  
+  domain: automation
+
+  input:
+    remote_device:
+      name: Remote Device
+      description: Matter dual button remote device
+      selector:
+        device:
+          integration: matter
+
+    button_1_single:
+      name: Button 1 – Single Press
+      default: []
+      selector:
+        action: {}
+
+    button_1_double:
+      name: Button 1 – Double Press
+      default: []
+      selector:
+        action: {}
+
+    button_1_long:
+      name: Button 1 – Long Press
+      default: []
+      selector:
+        action: {}
+
+    button_2_single:
+      name: Button 2 – Single Press
+      default: []
+      selector:
+        action: {}
+
+    button_2_double:
+      name: Button 2 – Double Press
+      default: []
+      selector:
+        action: {}
+
+    button_2_long:
+      name: Button 2 – Long Press
+      default: []
+      selector:
+        action: {}
+
+mode: queued
+max: 10
+
+trigger:
+  # Button 1
+  - platform: device
+    domain: matter
+    device_id: !input remote_device
+    type: button_short_press
+    subtype: button_1
+    id: button_1_single
+
+  - platform: device
+    domain: matter
+    device_id: !input remote_device
+    type: button_double_press
+    subtype: button_1
+    id: button_1_double
+
+  - platform: device
+    domain: matter
+    device_id: !input remote_device
+    type: button_long_press
+    subtype: button_1
+    id: button_1_long
+
+  # Button 2
+  - platform: device
+    domain: matter
+    device_id: !input remote_device
+    type: button_short_press
+    subtype: button_2
+    id: button_2_single
+
+  - platform: device
+    domain: matter
+    device_id: !input remote_device
+    type: button_double_press
+    subtype: button_2
+    id: button_2_double
+
+  - platform: device
+    domain: matter
+    device_id: !input remote_device
+    type: button_long_press
+    subtype: button_2
+    id: button_2_long
+
+action:
+  - choose:
+      - conditions: "{{ trigger.id == 'button_1_single' }}"
+        sequence: !input button_1_single
+
+      - conditions: "{{ trigger.id == 'button_1_double' }}"
+        sequence: !input button_1_double
+
+      - conditions: "{{ trigger.id == 'button_1_long' }}"
+        sequence: !input button_1_long
+
+      - conditions: "{{ trigger.id == 'button_2_single' }}"
+        sequence: !input button_2_single
+
+      - conditions: "{{ trigger.id == 'button_2_double' }}"
+        sequence: !input button_2_double
+
+      - conditions: "{{ trigger.id == 'button_2_long' }}"
+        sequence: !input button_2_long
