@@ -211,7 +211,7 @@ blueprint:
 
     action_timeout:
       name: "  ↳ Action Timeout"
-      description: ⚙️ Advanced: Maximum time to wait for an action to complete before continuing
+      description: "⚙️ Advanced: Maximum time to wait for an action to complete before continuing"
       default: 30
       selector:
         number:
@@ -223,7 +223,7 @@ blueprint:
 
     battery_warning_enabled:
       name: "  ↳ 🔋 Battery Low Warning"
-      description: ⚙️ Advanced: Enable to receive notifications when battery is low
+      description: "⚙️ Advanced: Enable to receive notifications when battery is low"
       default: disabled
       selector:
         select:
@@ -235,7 +235,7 @@ blueprint:
 
     battery_warning_level:
       name: "    ↳ Battery Warning Level"
-      description: ⚙️ Advanced: Battery percentage threshold for low battery warning
+      description: "⚙️ Advanced: Battery percentage threshold for low battery warning"
       default: 20
       selector:
         number:
@@ -255,7 +255,7 @@ blueprint:
 
     debug_mode:
       name: "  ↳ 🐛 Debug Mode"
-      description: ⚙️ Advanced: Enable to receive notifications for each button press (useful for testing)
+      description: "⚙️ Advanced: Enable to receive notifications for each button press (useful for testing)"
       default: disabled
       selector:
         select:
