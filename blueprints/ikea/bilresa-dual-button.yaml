@@ -77,12 +77,29 @@ blueprint:
     # ============================================
     # BUTTON 1 CONFIGURATION
     # ============================================
-    button_1_enabled:
-      name: "⚙️ Button 1 - Enable Actions"
-      description: Toggle to enable/disable all Button 1 actions. Disable this to hide Button 1 settings.
-      default: true
+    button_1_state:
+      name: "🔵 Button 1"
+      description: Enable or disable Button 1 actions
+      default: enabled
       selector:
-        boolean: {}
+        select:
+          options:
+            - label: "Enabled"
+              value: enabled
+            - label: "Disabled"
+              value: disabled
+
+    button_1_cooldown:
+      name: "  ↳ Button 1 Cooldown"
+      description: Minimum delay between Button 1 presses (prevents accidental double triggers)
+      default: 0.1
+      selector:
+        number:
+          min: 0
+          max: 2
+          step: 0.1
+          unit_of_measurement: seconds
+          mode: slider
 
     button_1_single:
       name: "  ↳ Single Press Action"
@@ -115,12 +132,29 @@ blueprint:
     # ============================================
     # BUTTON 2 CONFIGURATION
     # ============================================
-    button_2_enabled:
-      name: "⚙️ Button 2 - Enable Actions"
-      description: Toggle to enable/disable all Button 2 actions. Disable this to hide Button 2 settings.
-      default: true
+    button_2_state:
+      name: "🔴 Button 2"
+      description: Enable or disable Button 2 actions
+      default: enabled
       selector:
-        boolean: {}
+        select:
+          options:
+            - label: "Enabled"
+              value: enabled
+            - label: "Disabled"
+              value: disabled
+
+    button_2_cooldown:
+      name: "  ↳ Button 2 Cooldown"
+      description: Minimum delay between Button 2 presses (prevents accidental double triggers)
+      default: 0.1
+      selector:
+        number:
+          min: 0
+          max: 2
+          step: 0.1
+          unit_of_measurement: seconds
+          mode: slider
 
     button_2_single:
       name: "  ↳ Single Press Action"
@@ -151,30 +185,33 @@ blueprint:
         action: {}
 
     # ============================================
-    # ADVANCED SETTINGS
+    # ⚠️ ADVANCED SETTINGS (Optional)
     # ============================================
-    show_advanced_settings:
-      name: "🔧 Show Advanced Settings"
-      description: Enable this to configure advanced options like cooldown, battery warnings, debug mode, and timeouts
-      default: false
+    # Enable the option below to configure advanced features
+    # such as battery monitoring, debug mode, and action timeout.
+    # Leave disabled if you don't need these features.
+    # ============================================
+    
+    enable_advanced_settings:
+      name: "🔧 Enable Advanced Settings"
+      description: |
+        ⚠️ Only enable this if you need advanced features.
+        When enabled, additional options will appear below:
+        • Battery low warning notifications
+        • Debug mode for testing button presses
+        • Action timeout configuration
+      default: disabled
       selector:
-        boolean: {}
-
-    button_cooldown:
-      name: "  ↳ Button Cooldown"
-      description: Minimum delay between button presses (prevents accidental double triggers)
-      default: 0.1
-      selector:
-        number:
-          min: 0
-          max: 2
-          step: 0.1
-          unit_of_measurement: seconds
-          mode: slider
+        select:
+          options:
+            - label: "Disabled (Recommended)"
+              value: disabled
+            - label: "Enabled"
+              value: enabled
 
     action_timeout:
       name: "  ↳ Action Timeout"
-      description: Maximum time to wait for an action to complete before continuing
+      description: ⚙️ Advanced: Maximum time to wait for an action to complete before continuing
       default: 30
       selector:
         number:
@@ -184,17 +221,21 @@ blueprint:
           unit_of_measurement: seconds
           mode: slider
 
-    # Battery Monitoring
     battery_warning_enabled:
-      name: "  ↳ 🔋 Enable Battery Warning"
-      description: Send a notification when battery level is low
-      default: false
+      name: "  ↳ 🔋 Battery Low Warning"
+      description: ⚙️ Advanced: Enable to receive notifications when battery is low
+      default: disabled
       selector:
-        boolean: {}
+        select:
+          options:
+            - label: "Disabled"
+              value: disabled
+            - label: "Enabled"
+              value: enabled
 
     battery_warning_level:
       name: "    ↳ Battery Warning Level"
-      description: Battery percentage threshold for low battery warning
+      description: ⚙️ Advanced: Battery percentage threshold for low battery warning
       default: 20
       selector:
         number:
@@ -205,40 +246,53 @@ blueprint:
           mode: slider
 
     battery_notification_service:
-      name: "    ↳ Battery Notification Service"
-      description: "Service to send battery warnings (e.g., notify.mobile_app_your_phone)"
+      name: "    ↳ Notification Service"
+      description: "⚙️ Advanced: Service to send battery warnings (e.g., notify.mobile_app_your_phone)"
       default: ""
       selector:
-        text: {}
+        text:
+          multiline: false
 
-    # Debug Mode
     debug_mode:
-      name: "  ↳ 🐛 Enable Debug Mode"
-      description: Send notifications for each button press (useful for testing and troubleshooting)
-      default: false
+      name: "  ↳ 🐛 Debug Mode"
+      description: ⚙️ Advanced: Enable to receive notifications for each button press (useful for testing)
+      default: disabled
       selector:
-        boolean: {}
+        select:
+          options:
+            - label: "Disabled"
+              value: disabled
+            - label: "Enabled"
+              value: enabled
 
     debug_notification_service:
       name: "    ↳ Debug Notification Service"
-      description: "Service for debug notifications (e.g., notify.mobile_app_your_phone)"
+      description: "⚙️ Advanced: Service for debug notifications (e.g., notify.mobile_app_your_phone)"
       default: ""
       selector:
-        text: {}
+        text:
+          multiline: false
 
 mode: queued
 max: 10
 
 variables:
-  button_1_enabled: !input button_1_enabled
-  button_2_enabled: !input button_2_enabled
-  cooldown: !input button_cooldown
-  debug: !input debug_mode
+  button_1_enabled: "{{ is_state('input_select.button_1_state', 'enabled') or button_1_state == 'enabled' }}"
+  button_2_enabled: "{{ is_state('input_select.button_2_state', 'enabled') or button_2_state == 'enabled' }}"
+  button_1_state: !input button_1_state
+  button_2_state: !input button_2_state
+  button_1_cooldown: !input button_1_cooldown
+  button_2_cooldown: !input button_2_cooldown
+  debug: "{{ debug_mode == 'enabled' }}"
+  debug_mode: !input debug_mode
   debug_service: !input debug_notification_service
-  battery_warning: !input battery_warning_enabled
+  battery_warning: "{{ battery_warning_enabled == 'enabled' }}"
+  battery_warning_enabled: !input battery_warning_enabled
   battery_level: !input battery_warning_level
   battery_service: !input battery_notification_service
   timeout: !input action_timeout
+  advanced_enabled: "{{ enable_advanced_settings == 'enabled' }}"
+  enable_advanced_settings: !input enable_advanced_settings
 
 trigger:
   # Button 1
@@ -300,7 +354,7 @@ trigger:
     id: button_2_long_release
 
 action:
-  # Debug notification
+  # Debug notification (only if advanced settings enabled)
   - if:
       - condition: template
         value_template: "{{ debug and debug_service != '' }}"
@@ -308,43 +362,47 @@ action:
       - service: "{{ debug_service }}"
         data:
           title: "🔘 BILRESA Button Pressed"
-          message: "Button: {{ trigger.id }}"
+          message: "Button: {{ trigger.id }} at {{ now().strftime('%H:%M:%S') }}"
 
-  # Cooldown delay
-  - delay:
-      seconds: "{{ cooldown }}"
-
-  # Execute button actions
+  # Execute button actions with individual cooldowns
   - choose:
       # Button 1 actions
       - conditions:
           - "{{ trigger.id == 'button_1_single' }}"
-          - "{{ button_1_enabled }}"
+          - "{{ button_1_state == 'enabled' }}"
         sequence:
+          - delay:
+              seconds: "{{ button_1_cooldown }}"
           - timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_1_single
 
       - conditions:
           - "{{ trigger.id == 'button_1_double' }}"
-          - "{{ button_1_enabled }}"
+          - "{{ button_1_state == 'enabled' }}"
         sequence:
+          - delay:
+              seconds: "{{ button_1_cooldown }}"
           - timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_1_double
 
       - conditions:
           - "{{ trigger.id == 'button_1_long' }}"
-          - "{{ button_1_enabled }}"
+          - "{{ button_1_state == 'enabled' }}"
         sequence:
+          - delay:
+              seconds: "{{ button_1_cooldown }}"
           - timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_1_long
 
       - conditions:
           - "{{ trigger.id == 'button_1_long_release' }}"
-          - "{{ button_1_enabled }}"
+          - "{{ button_1_state == 'enabled' }}"
         sequence:
+          - delay:
+              seconds: "{{ button_1_cooldown }}"
           - timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_1_long_release
@@ -352,32 +410,40 @@ action:
       # Button 2 actions
       - conditions:
           - "{{ trigger.id == 'button_2_single' }}"
-          - "{{ button_2_enabled }}"
+          - "{{ button_2_state == 'enabled' }}"
         sequence:
+          - delay:
+              seconds: "{{ button_2_cooldown }}"
           - timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_2_single
 
       - conditions:
           - "{{ trigger.id == 'button_2_double' }}"
-          - "{{ button_2_enabled }}"
+          - "{{ button_2_state == 'enabled' }}"
         sequence:
+          - delay:
+              seconds: "{{ button_2_cooldown }}"
           - timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_2_double
 
       - conditions:
           - "{{ trigger.id == 'button_2_long' }}"
-          - "{{ button_2_enabled }}"
+          - "{{ button_2_state == 'enabled' }}"
         sequence:
+          - delay:
+              seconds: "{{ button_2_cooldown }}"
           - timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_2_long
 
       - conditions:
           - "{{ trigger.id == 'button_2_long_release' }}"
-          - "{{ button_2_enabled }}"
+          - "{{ button_2_state == 'enabled' }}"
         sequence:
+          - delay:
+              seconds: "{{ button_2_cooldown }}"
           - timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_2_long_release
