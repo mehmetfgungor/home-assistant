@@ -1,6 +1,6 @@
 blueprint:
-  name: IKEA BILRESA dual button remote control
-  author: Mehmet F Gungor
+  name: "IKEA BILRESA dual button remote control"
+  author: "Mehmet F Gungor"
   description: >
     ## Overview
     
@@ -64,223 +64,188 @@ blueprint:
   source_url: https://raw.githubusercontent.com/mehmetfgungor/home-assistant/refs/heads/main/blueprints/ikea/bilresa-dual-button.yaml
 
   input:
-    remote_device:
-      name: Remote Device
-      description: Select your IKEA BILRESA Matter dual button remote
-      selector:
-        device:
-          integration: matter
-          entity:
-            - domain: event
-              device_class: button
+    setup:
+      name: "⚙️ Remote Setup"
+      description: >
+        Select your IKEA BILRESA Matter dual button remote device.
+      collapsed: true
+      input:
+        remote_device:
+          name: "Remote Device"
+          description: "Select your IKEA BILRESA Matter dual button remote"
+          selector:
+            device:
+              integration: matter
+              entity:
+                - domain: event
+                  device_class: button
 
-    # ============================================
-    # BUTTON 1 CONFIGURATION
-    # ============================================
-    button_1_state:
-      name: "🔵 Button 1"
-      description: Enable or disable Button 1 actions
-      default: enabled
-      selector:
-        select:
-          options:
-            - label: "Enabled"
-              value: enabled
-            - label: "Disabled"
-              value: disabled
+    button_1:
+      name: "🔵 Button 1 Actions"
+      description: >
+        Define actions when pressing Button 1.
+      collapsed: true
+      input:
+        button_1_cooldown:
+          name: "Button 1 Cooldown"
+          description: "Minimum delay between Button 1 presses (prevents accidental double triggers)"
+          default: 0.1
+          selector:
+            number:
+              min: 0
+              max: 2
+              step: 0.1
+              unit_of_measurement: seconds
+              mode: slider
 
-    button_1_cooldown:
-      name: "  ↳ Button 1 Cooldown"
-      description: Minimum delay between Button 1 presses (prevents accidental double triggers)
-      default: 0.1
-      selector:
-        number:
-          min: 0
-          max: 2
-          step: 0.1
-          unit_of_measurement: seconds
-          mode: slider
+        button_1_single:
+          name: "Single Press"
+          description: "Example: Toggle a light, play/pause media"
+          default: []
+          selector:
+            action: {}
 
-    button_1_single:
-      name: "  ↳ Single Press Action"
-      description: "Example: Toggle a light, play/pause media"
-      default: []
-      selector:
-        action: {}
+        button_1_double:
+          name: "Double Press"
+          description: "Example: Activate a scene, toggle multiple lights"
+          default: []
+          selector:
+            action: {}
 
-    button_1_double:
-      name: "  ↳ Double Press Action"
-      description: "Example: Activate a scene, toggle multiple lights"
-      default: []
-      selector:
-        action: {}
+        button_1_long:
+          name: "Long Press (Hold)"
+          description: "Example: Start dimming up, increase volume"
+          default: []
+          selector:
+            action: {}
 
-    button_1_long:
-      name: "  ↳ Long Press (Hold) Action"
-      description: "Example: Start dimming up, increase volume"
-      default: []
-      selector:
-        action: {}
+        button_1_long_release:
+          name: "Long Press Release"
+          description: "Example: Stop dimming, stop volume change"
+          default: []
+          selector:
+            action: {}
 
-    button_1_long_release:
-      name: "  ↳ Long Press Release Action"
-      description: "Example: Stop dimming, stop volume change"
-      default: []
-      selector:
-        action: {}
+    button_2:
+      name: "🔴 Button 2 Actions"
+      description: >
+        Define actions when pressing Button 2.
+      collapsed: true
+      input:
+        button_2_cooldown:
+          name: "Button 2 Cooldown"
+          description: "Minimum delay between Button 2 presses (prevents accidental double triggers)"
+          default: 0.1
+          selector:
+            number:
+              min: 0
+              max: 2
+              step: 0.1
+              unit_of_measurement: seconds
+              mode: slider
 
-    # ============================================
-    # BUTTON 2 CONFIGURATION
-    # ============================================
-    button_2_state:
-      name: "🔴 Button 2"
-      description: Enable or disable Button 2 actions
-      default: enabled
-      selector:
-        select:
-          options:
-            - label: "Enabled"
-              value: enabled
-            - label: "Disabled"
-              value: disabled
+        button_2_single:
+          name: "Single Press"
+          description: "Example: Toggle a light, turn off devices"
+          default: []
+          selector:
+            action: {}
 
-    button_2_cooldown:
-      name: "  ↳ Button 2 Cooldown"
-      description: Minimum delay between Button 2 presses (prevents accidental double triggers)
-      default: 0.1
-      selector:
-        number:
-          min: 0
-          max: 2
-          step: 0.1
-          unit_of_measurement: seconds
-          mode: slider
+        button_2_double:
+          name: "Double Press"
+          description: "Example: Activate night mode, lock doors"
+          default: []
+          selector:
+            action: {}
 
-    button_2_single:
-      name: "  ↳ Single Press Action"
-      description: "Example: Toggle a light, turn off devices"
-      default: []
-      selector:
-        action: {}
+        button_2_long:
+          name: "Long Press (Hold)"
+          description: "Example: Start dimming down, decrease volume"
+          default: []
+          selector:
+            action: {}
 
-    button_2_double:
-      name: "  ↳ Double Press Action"
-      description: "Example: Activate night mode, lock doors"
-      default: []
-      selector:
-        action: {}
+        button_2_long_release:
+          name: "Long Press Release"
+          description: "Example: Stop dimming, stop volume change"
+          default: []
+          selector:
+            action: {}
 
-    button_2_long:
-      name: "  ↳ Long Press (Hold) Action"
-      description: "Example: Start dimming down, decrease volume"
-      default: []
-      selector:
-        action: {}
+    advanced:
+      name: "🔧 Advanced Settings"
+      description: >
+        ⚠️ Optional: Configure advanced features such as battery monitoring, debug mode, and action timeout.
+      collapsed: true
+      input:
+        action_timeout:
+          name: "Action Timeout"
+          description: "Maximum time to wait for an action to complete before continuing"
+          default: 30
+          selector:
+            number:
+              min: 5
+              max: 120
+              step: 5
+              unit_of_measurement: seconds
+              mode: slider
 
-    button_2_long_release:
-      name: "  ↳ Long Press Release Action"
-      description: "Example: Stop dimming, stop volume change"
-      default: []
-      selector:
-        action: {}
+        battery_warning_enabled:
+          name: "🔋 Battery Low Warning"
+          description: "Enable to receive notifications when battery is low"
+          default: disabled
+          selector:
+            select:
+              options:
+                - label: "Disabled"
+                  value: disabled
+                - label: "Enabled"
+                  value: enabled
 
-    # ============================================
-    # ⚠️ ADVANCED SETTINGS (Optional)
-    # ============================================
-    # Enable the option below to configure advanced features
-    # such as battery monitoring, debug mode, and action timeout.
-    # Leave disabled if you don't need these features.
-    # ============================================
-    
-    enable_advanced_settings:
-      name: "🔧 Enable Advanced Settings"
-      description: |
-        ⚠️ Only enable this if you need advanced features.
-        When enabled, additional options will appear below:
-        • Battery low warning notifications
-        • Debug mode for testing button presses
-        • Action timeout configuration
-      default: disabled
-      selector:
-        select:
-          options:
-            - label: "Disabled (Recommended)"
-              value: disabled
-            - label: "Enabled"
-              value: enabled
+        battery_warning_level:
+          name: "Battery Warning Level"
+          description: "Battery percentage threshold for low battery warning"
+          default: 20
+          selector:
+            number:
+              min: 5
+              max: 50
+              step: 5
+              unit_of_measurement: "%"
+              mode: slider
 
-    action_timeout:
-      name: "  ↳ Action Timeout"
-      description: "⚙️ Advanced: Maximum time to wait for an action to complete before continuing"
-      default: 30
-      selector:
-        number:
-          min: 5
-          max: 120
-          step: 5
-          unit_of_measurement: seconds
-          mode: slider
+        battery_notification_service:
+          name: "Notification Service"
+          description: "Service to send battery warnings (e.g., notify.mobile_app_your_phone)"
+          default: ""
+          selector:
+            text:
+              multiline: false
 
-    battery_warning_enabled:
-      name: "  ↳ 🔋 Battery Low Warning"
-      description: "⚙️ Advanced: Enable to receive notifications when battery is low"
-      default: disabled
-      selector:
-        select:
-          options:
-            - label: "Disabled"
-              value: disabled
-            - label: "Enabled"
-              value: enabled
+        debug_mode:
+          name: "🐛 Debug Mode"
+          description: "Enable to receive notifications for each button press (useful for testing)"
+          default: disabled
+          selector:
+            select:
+              options:
+                - label: "Disabled"
+                  value: disabled
+                - label: "Enabled"
+                  value: enabled
 
-    battery_warning_level:
-      name: "    ↳ Battery Warning Level"
-      description: "⚙️ Advanced: Battery percentage threshold for low battery warning"
-      default: 20
-      selector:
-        number:
-          min: 5
-          max: 50
-          step: 5
-          unit_of_measurement: "%"
-          mode: slider
-
-    battery_notification_service:
-      name: "    ↳ Notification Service"
-      description: "⚙️ Advanced: Service to send battery warnings (e.g., notify.mobile_app_your_phone)"
-      default: ""
-      selector:
-        text:
-          multiline: false
-
-    debug_mode:
-      name: "  ↳ 🐛 Debug Mode"
-      description: "⚙️ Advanced: Enable to receive notifications for each button press (useful for testing)"
-      default: disabled
-      selector:
-        select:
-          options:
-            - label: "Disabled"
-              value: disabled
-            - label: "Enabled"
-              value: enabled
-
-    debug_notification_service:
-      name: "    ↳ Debug Notification Service"
-      description: "⚙️ Advanced: Service for debug notifications (e.g., notify.mobile_app_your_phone)"
-      default: ""
-      selector:
-        text:
-          multiline: false
+        debug_notification_service:
+          name: "Debug Notification Service"
+          description: "Service for debug notifications (e.g., notify.mobile_app_your_phone)"
+          default: ""
+          selector:
+            text:
+              multiline: false
 
 mode: queued
 max: 10
 
 variables:
-  button_1_enabled: "{{ is_state('input_select.button_1_state', 'enabled') or button_1_state == 'enabled' }}"
-  button_2_enabled: "{{ is_state('input_select.button_2_state', 'enabled') or button_2_state == 'enabled' }}"
-  button_1_state: !input button_1_state
-  button_2_state: !input button_2_state
   button_1_cooldown: !input button_1_cooldown
   button_2_cooldown: !input button_2_cooldown
   debug: "{{ debug_mode == 'enabled' }}"
@@ -291,8 +256,6 @@ variables:
   battery_level: !input battery_warning_level
   battery_service: !input battery_notification_service
   timeout: !input action_timeout
-  advanced_enabled: "{{ enable_advanced_settings == 'enabled' }}"
-  enable_advanced_settings: !input enable_advanced_settings
 
 trigger:
   # Button 1
@@ -369,7 +332,6 @@ action:
       # Button 1 actions
       - conditions:
           - "{{ trigger.id == 'button_1_single' }}"
-          - "{{ button_1_state == 'enabled' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
@@ -379,7 +341,6 @@ action:
 
       - conditions:
           - "{{ trigger.id == 'button_1_double' }}"
-          - "{{ button_1_state == 'enabled' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
@@ -389,7 +350,6 @@ action:
 
       - conditions:
           - "{{ trigger.id == 'button_1_long' }}"
-          - "{{ button_1_state == 'enabled' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
@@ -399,7 +359,6 @@ action:
 
       - conditions:
           - "{{ trigger.id == 'button_1_long_release' }}"
-          - "{{ button_1_state == 'enabled' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
@@ -410,7 +369,6 @@ action:
       # Button 2 actions
       - conditions:
           - "{{ trigger.id == 'button_2_single' }}"
-          - "{{ button_2_state == 'enabled' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
@@ -420,7 +378,6 @@ action:
 
       - conditions:
           - "{{ trigger.id == 'button_2_double' }}"
-          - "{{ button_2_state == 'enabled' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
@@ -430,7 +387,6 @@ action:
 
       - conditions:
           - "{{ trigger.id == 'button_2_long' }}"
-          - "{{ button_2_state == 'enabled' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
@@ -440,7 +396,6 @@ action:
 
       - conditions:
           - "{{ trigger.id == 'button_2_long_release' }}"
-          - "{{ button_2_state == 'enabled' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
