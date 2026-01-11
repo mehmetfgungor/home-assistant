@@ -249,7 +249,6 @@ variables:
   battery_warning_enabled: !input battery_warning_enabled
   battery_level: !input battery_warning_level
   battery_service: !input battery_notification_service
-  timeout: !input action_timeout
 
 trigger:
   # Button 1
@@ -329,36 +328,28 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - choose:
-              - conditions: []
-                sequence: !input button_1_single
+          - !input button_1_single
 
       - conditions:
           - "{{ trigger.id == 'button_1_double' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - choose:
-              - conditions: []
-                sequence: !input button_1_double
+          - !input button_1_double
 
       - conditions:
           - "{{ trigger.id == 'button_1_long' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - choose:
-              - conditions: []
-                sequence: !input button_1_long
+          - !input button_1_long
 
       - conditions:
           - "{{ trigger.id == 'button_1_long_release' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - choose:
-              - conditions: []
-                sequence: !input button_1_long_release
+          - !input button_1_long_release
 
       # Button 2 actions
       - conditions:
@@ -366,33 +357,25 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - choose:
-              - conditions: []
-                sequence: !input button_2_single
+          - !input button_2_single
 
       - conditions:
           - "{{ trigger.id == 'button_2_double' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - choose:
-              - conditions: []
-                sequence: !input button_2_double
+          - !input button_2_double
 
       - conditions:
           - "{{ trigger.id == 'button_2_long' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - choose:
-              - conditions: []
-                sequence: !input button_2_long
+          - !input button_2_long
 
       - conditions:
           - "{{ trigger.id == 'button_2_long_release' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - choose:
-              - conditions: []
-                sequence: !input button_2_long_release
+          - !input button_2_long_release
