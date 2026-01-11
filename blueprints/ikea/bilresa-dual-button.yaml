@@ -64,31 +64,29 @@ blueprint:
   source_url: https://raw.githubusercontent.com/mehmetfgungor/home-assistant/refs/heads/main/blueprints/ikea/bilresa-dual-button.yaml
 
   input:
-    setup:
-      name: "⚙️ Remote Setup"
-      description: |
-        Select your IKEA BILRESA Matter dual button remote device.
-      collapsed: true
-      input:
-        remote_device:
-          name: "Remote Device"
-          description: "Select your IKEA BILRESA Matter dual button remote"
-          selector:
-            device:
-              integration: matter
-              entity:
-                - domain: event
-                  device_class: button
+    remote_device:
+      name: "Remote Device"
+      description: "Select your IKEA BILRESA Matter dual button remote."
+      selector:
+        device:
+          integration: matter
+          entity:
+            - domain: event
+              device_class: button
 
     button_1:
-      name: "🔵 Button 1 Actions"
+      name: "Button 1 Configuration"
       description: |
-        Define actions when pressing Button 1.
+        ---
+        **Configure all actions and behavior for Button 1**
+        
+        Set up single press, double press, and long press actions for the first button.
+        ---
       collapsed: true
       input:
         button_1_cooldown:
-          name: "Button 1 Cooldown"
-          description: "Minimum delay between Button 1 presses (prevents accidental double triggers)."
+          name: "Cooldown Duration"
+          description: "Minimum delay between button presses to prevent accidental double triggers."
           default: 0.1
           selector:
             number:
@@ -99,42 +97,46 @@ blueprint:
               mode: slider
 
         button_1_single:
-          name: "Single Press"
-          description: "Example: Toggle a light, play/pause media"
+          name: "Single Press Action"
+          description: "Action to perform when button is pressed once (e.g., toggle light, play/pause media)."
           default: []
           selector:
             action: {}
 
         button_1_double:
-          name: "Double Press"
-          description: "Example: Activate a scene, toggle multiple lights"
+          name: "Double Press Action"
+          description: "Action to perform when button is pressed twice quickly (e.g., activate scene, toggle multiple lights)."
           default: []
           selector:
             action: {}
 
         button_1_long:
-          name: "Long Press (Hold)"
-          description: "Example: Start dimming up, increase volume"
+          name: "Long Press Action"
+          description: "Action to perform when button is held down (e.g., start dimming up, increase volume)."
           default: []
           selector:
             action: {}
 
         button_1_long_release:
-          name: "Long Press Release"
-          description: "Example: Stop dimming, stop volume change"
+          name: "Long Press Release Action"
+          description: "Action to perform when button is released after long press (e.g., stop dimming, stop volume change)."
           default: []
           selector:
             action: {}
 
     button_2:
-      name: "🔴 Button 2 Actions"
+      name: "Button 2 Configuration"
       description: |
-        Define actions when pressing Button 2.
+        ---
+        **Configure all actions and behavior for Button 2**
+        
+        Set up single press, double press, and long press actions for the second button.
+        ---
       collapsed: true
       input:
         button_2_cooldown:
-          name: "Button 2 Cooldown"
-          description: "Minimum delay between Button 2 presses (prevents accidental double triggers)."
+          name: "Cooldown Duration"
+          description: "Minimum delay between button presses to prevent accidental double triggers."
           default: 0.1
           selector:
             number:
@@ -145,44 +147,48 @@ blueprint:
               mode: slider
 
         button_2_single:
-          name: "Single Press"
-          description: "Example: Toggle a light, turn off devices"
+          name: "Single Press Action"
+          description: "Action to perform when button is pressed once (e.g., toggle light, turn off devices)."
           default: []
           selector:
             action: {}
 
         button_2_double:
-          name: "Double Press"
-          description: "Example: Activate night mode, lock doors"
+          name: "Double Press Action"
+          description: "Action to perform when button is pressed twice quickly (e.g., activate night mode, lock doors)."
           default: []
           selector:
             action: {}
 
         button_2_long:
-          name: "Long Press (Hold)"
-          description: "Example: Start dimming down, decrease volume"
+          name: "Long Press Action"
+          description: "Action to perform when button is held down (e.g., start dimming down, decrease volume)."
           default: []
           selector:
             action: {}
 
         button_2_long_release:
-          name: "Long Press Release"
-          description: "Example: Stop dimming, stop volume change"
+          name: "Long Press Release Action"
+          description: "Action to perform when button is released after long press (e.g., stop dimming, stop volume change)."
           default: []
           selector:
             action: {}
 
     advanced:
-      name: "🔧 Advanced Settings"
+      name: "Advanced Settings"
       description: |
+        ---
+        **Optional Configuration**
         
-        ⚠️ Optional: Configure advanced features such as battery monitoring, debug mode, and action timeout.
+        Battery monitoring, debug mode, and timing configuration.
         
+        *Leave these settings at default unless you need specific features.*
+        ---
       collapsed: true
       input:
         action_timeout:
           name: "Action Timeout"
-          description: "Maximum time to wait for an action to complete before continuing."
+          description: "Maximum time (in seconds) to wait for an action to complete before continuing."
           default: 30
           selector:
             number:
@@ -193,8 +199,8 @@ blueprint:
               mode: slider
 
         battery_warning_enabled:
-          name: "🔋 Battery Low Warning"
-          description: "Enable to receive notifications when battery is low."
+          name: "Enable Battery Low Warning"
+          description: "Receive notifications when the remote's battery level is low."
           default: disabled
           selector:
             select:
@@ -205,8 +211,8 @@ blueprint:
                   value: enabled
 
         battery_warning_level:
-          name: "Battery Warning Level"
-          description: "Battery percentage threshold for low battery warning."
+          name: "Battery Warning Threshold"
+          description: "Battery percentage level that triggers low battery notifications."
           default: 20
           selector:
             number:
@@ -217,16 +223,16 @@ blueprint:
               mode: slider
 
         battery_notification_service:
-          name: "Notification Service"
-          description: "Service to send battery warnings (e.g., notify.mobile_app_your_phone)"
+          name: "Battery Notification Service"
+          description: "Home Assistant notification service for battery warnings (e.g., notify.mobile_app_your_phone)."
           default: ""
           selector:
             text:
               multiline: false
 
         debug_mode:
-          name: "🐛 Debug Mode"
-          description: "Enable to receive notifications for each button press (useful for testing)."
+          name: "Enable Debug Mode"
+          description: "Receive real-time notifications for each button press event (useful for testing and troubleshooting)."
           default: disabled
           selector:
             select:
@@ -238,7 +244,7 @@ blueprint:
 
         debug_notification_service:
           name: "Debug Notification Service"
-          description: "Service for debug notifications (e.g., notify.mobile_app_your_phone)"
+          description: "Home Assistant notification service for debug messages (e.g., notify.mobile_app_your_phone)."
           default: ""
           selector:
             text:
