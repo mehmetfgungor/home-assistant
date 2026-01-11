@@ -329,40 +329,36 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - alias: "Execute Button 1 Single Press"
-            timeout: "{{ timeout }}"
-            continue_on_timeout: true
-            sequence: !input button_1_single
+          - choose:
+              - conditions: []
+                sequence: !input button_1_single
 
       - conditions:
           - "{{ trigger.id == 'button_1_double' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - alias: "Execute Button 1 Double Press"
-            timeout: "{{ timeout }}"
-            continue_on_timeout: true
-            sequence: !input button_1_double
+          - choose:
+              - conditions: []
+                sequence: !input button_1_double
 
       - conditions:
           - "{{ trigger.id == 'button_1_long' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - alias: "Execute Button 1 Long Press"
-            timeout: "{{ timeout }}"
-            continue_on_timeout: true
-            sequence: !input button_1_long
+          - choose:
+              - conditions: []
+                sequence: !input button_1_long
 
       - conditions:
           - "{{ trigger.id == 'button_1_long_release' }}"
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - alias: "Execute Button 1 Long Release"
-            timeout: "{{ timeout }}"
-            continue_on_timeout: true
-            sequence: !input button_1_long_release
+          - choose:
+              - conditions: []
+                sequence: !input button_1_long_release
 
       # Button 2 actions
       - conditions:
@@ -370,37 +366,33 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - alias: "Execute Button 2 Single Press"
-            timeout: "{{ timeout }}"
-            continue_on_timeout: true
-            sequence: !input button_2_single
+          - choose:
+              - conditions: []
+                sequence: !input button_2_single
 
       - conditions:
           - "{{ trigger.id == 'button_2_double' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - alias: "Execute Button 2 Double Press"
-            timeout: "{{ timeout }}"
-            continue_on_timeout: true
-            sequence: !input button_2_double
+          - choose:
+              - conditions: []
+                sequence: !input button_2_double
 
       - conditions:
           - "{{ trigger.id == 'button_2_long' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - alias: "Execute Button 2 Long Press"
-            timeout: "{{ timeout }}"
-            continue_on_timeout: true
-            sequence: !input button_2_long
+          - choose:
+              - conditions: []
+                sequence: !input button_2_long
 
       - conditions:
           - "{{ trigger.id == 'button_2_long_release' }}"
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - alias: "Execute Button 2 Long Release"
-            timeout: "{{ timeout }}"
-            continue_on_timeout: true
-            sequence: !input button_2_long_release
+          - choose:
+              - conditions: []
+                sequence: !input button_2_long_release
