@@ -66,7 +66,7 @@ blueprint:
   input:
     setup:
       name: "⚙️ Remote Setup"
-      description: >
+      description: |
         Select your IKEA BILRESA Matter dual button remote device.
       collapsed: true
       input:
@@ -82,13 +82,13 @@ blueprint:
 
     button_1:
       name: "🔵 Button 1 Actions"
-      description: >
+      description: |
         Define actions when pressing Button 1.
       collapsed: true
       input:
         button_1_cooldown:
           name: "Button 1 Cooldown"
-          description: "Minimum delay between Button 1 presses (prevents accidental double triggers)"
+          description: "Minimum delay between Button 1 presses (prevents accidental double triggers)."
           default: 0.1
           selector:
             number:
@@ -128,13 +128,13 @@ blueprint:
 
     button_2:
       name: "🔴 Button 2 Actions"
-      description: >
+      description: |
         Define actions when pressing Button 2.
       collapsed: true
       input:
         button_2_cooldown:
           name: "Button 2 Cooldown"
-          description: "Minimum delay between Button 2 presses (prevents accidental double triggers)"
+          description: "Minimum delay between Button 2 presses (prevents accidental double triggers)."
           default: 0.1
           selector:
             number:
@@ -174,13 +174,15 @@ blueprint:
 
     advanced:
       name: "🔧 Advanced Settings"
-      description: >
+      description: |
+        
         ⚠️ Optional: Configure advanced features such as battery monitoring, debug mode, and action timeout.
+        
       collapsed: true
       input:
         action_timeout:
           name: "Action Timeout"
-          description: "Maximum time to wait for an action to complete before continuing"
+          description: "Maximum time to wait for an action to complete before continuing."
           default: 30
           selector:
             number:
@@ -192,7 +194,7 @@ blueprint:
 
         battery_warning_enabled:
           name: "🔋 Battery Low Warning"
-          description: "Enable to receive notifications when battery is low"
+          description: "Enable to receive notifications when battery is low."
           default: disabled
           selector:
             select:
@@ -204,7 +206,7 @@ blueprint:
 
         battery_warning_level:
           name: "Battery Warning Level"
-          description: "Battery percentage threshold for low battery warning"
+          description: "Battery percentage threshold for low battery warning."
           default: 20
           selector:
             number:
@@ -224,7 +226,7 @@ blueprint:
 
         debug_mode:
           name: "🐛 Debug Mode"
-          description: "Enable to receive notifications for each button press (useful for testing)"
+          description: "Enable to receive notifications for each button press (useful for testing)."
           default: disabled
           selector:
             select:
