@@ -329,7 +329,8 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - timeout: "{{ timeout }}"
+          - alias: "Execute Button 1 Single Press"
+            timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_1_single
 
@@ -338,7 +339,8 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - timeout: "{{ timeout }}"
+          - alias: "Execute Button 1 Double Press"
+            timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_1_double
 
@@ -347,7 +349,8 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - timeout: "{{ timeout }}"
+          - alias: "Execute Button 1 Long Press"
+            timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_1_long
 
@@ -356,7 +359,8 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_1_cooldown }}"
-          - timeout: "{{ timeout }}"
+          - alias: "Execute Button 1 Long Release"
+            timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_1_long_release
 
@@ -366,7 +370,8 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - timeout: "{{ timeout }}"
+          - alias: "Execute Button 2 Single Press"
+            timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_2_single
 
@@ -375,7 +380,8 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - timeout: "{{ timeout }}"
+          - alias: "Execute Button 2 Double Press"
+            timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_2_double
 
@@ -384,7 +390,8 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - timeout: "{{ timeout }}"
+          - alias: "Execute Button 2 Long Press"
+            timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_2_long
 
@@ -393,6 +400,7 @@ action:
         sequence:
           - delay:
               seconds: "{{ button_2_cooldown }}"
-          - timeout: "{{ timeout }}"
+          - alias: "Execute Button 2 Long Release"
+            timeout: "{{ timeout }}"
             continue_on_timeout: true
             sequence: !input button_2_long_release
